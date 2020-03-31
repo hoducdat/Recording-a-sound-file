@@ -96,17 +96,19 @@ class Application():
         topicsname = self.topic.get()
         if topicsname == 'Chọn chủ đề':
             return
-        if self.current_sentence >= len(self.sentence) -1:
-            self.status['text'] = 'Hết!'
-            self.file_output.close()
-            return
 
         if self.isRecording:
             self.warning['text'] = 'Đang ghi! Nhấn Stop để dừng lại trước khi chuyển sang câu tiếp theo'
             return
-        #Điền dữ liệu vào file "Output.txt"
+
+        # Điền dữ liệu vào file "Output.txt"
         self.file_output.write(str(self.current_sentence) + '.wav\n')
         self.file_output.write(self.sentence[self.current_sentence])
+
+        if self.current_sentence >= len(self.sentence) -1:
+            self.status['text'] = 'Hết!'
+            self.file_output.close()
+            return
 
         #Next câu
         self.current_sentence += 1
